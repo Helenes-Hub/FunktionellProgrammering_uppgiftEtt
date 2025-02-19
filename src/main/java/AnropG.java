@@ -86,6 +86,37 @@ public class AnropG {
                 .collect(Collectors.joining(", "));
     }
 
+    //Hur många skådisar var med i mer än 1 film? Returnera ett tal.
+    public int howManyActorsInMultipleMovies (List<Movie> list) {
+        return
+                (int) list
+                .stream()
+                .flatMap(m -> m.getCast()
+                .stream())
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(occurence -> occurence.getValue() > 1)
+                .count();
+    }
+
+    //Vad hette den skådis som var med i flest filmer? Returnera en String
+    public int actorInMostMovies (List<Movie> list) {
+        return
+                (int) list
+                        .stream()
+                        .flatMap(m -> m.getCast()
+                        .stream())
+                        .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
+                        .entrySet()
+                        .stream()
+                        .max(m->m.getValue())
+                        .map(Movie::getTitle)
+                        .collect(Collectors.joining(", "));
+
+
+    }
+
 
 
 }

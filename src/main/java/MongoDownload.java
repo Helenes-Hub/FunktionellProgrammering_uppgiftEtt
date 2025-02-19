@@ -53,10 +53,12 @@ public class MongoDownload {
             //fråga5
             System.out.println("Question five: \n");
             String movieWithLowestCast=anrop.movieWithLeastActors(movieList);
-            System.out.println("The movie with the lowest amount of actors is: "+movieWithLowestCast+"\n");
+            System.out.println("The movie/s with the lowest amount of actors is: "+movieWithLowestCast+"\n");
 
             //fråga6
             System.out.println("Question six: \n");
+            int numberOfActorsInMultipleMovies= anrop.howManyActorsInMultipleMovies(movieList);
+            System.out.println("There are "+numberOfActorsInMultipleMovies+" actors in the multiple movies \n");
 
             //Här gör du anrop till alla dina funktioner som ska skriva ut svaren på frågorna som
             //efterfrågas i uppgiften

@@ -29,7 +29,7 @@ public class MongoDownload {
                 System.out.println(movie);
             }
             //fråga1
-            Long all=anrop.countAll(movieList);
+            int all=anrop.countAll(movieList);
             System.out.println("Question one: \n");
             System.out.println("Total amount of movies: "+ all + "\n");
 
@@ -60,9 +60,20 @@ public class MongoDownload {
             int numberOfActorsInMultipleMovies= anrop.howManyActorsInMultipleMovies(movieList);
             System.out.println("There are "+numberOfActorsInMultipleMovies+" actors in the multiple movies \n");
 
+            //fråga7
+            System.out.println("Question seven: \n");
+            System.out.println("The actor that appears in most movies is: "+
+                    anrop.actorInMostMovies(movieList)+ "\n");
+
+            //fråga8
+            System.out.println("Question eight: \n");
+            System.out.println("The number of unique languages are: "+ anrop.uniqueLanguages(movieList)+ "\n");
             //Här gör du anrop till alla dina funktioner som ska skriva ut svaren på frågorna som
             //efterfrågas i uppgiften
 
+            //fråga9
+            System.out.println("Question nine: \n");
+            System.out.println("It is -"+anrop.dupes(movieList)+ "- that there are duplicate movies"+"\n");
 
         } catch (Exception e) {
             e.printStackTrace();

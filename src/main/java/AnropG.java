@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AnropG {
@@ -8,8 +6,8 @@ public class AnropG {
     public AnropG (){}
 
     //Hur många filmer gjordes 1975 (enligt vårt data). Returnera ett tal
-    public long countAll(List<Movie> list) {
-        return list
+    public int countAll(List<Movie> list) {
+        return (int) list
                 .stream()
                 .count();
     }
@@ -96,27 +94,47 @@ public class AnropG {
                 .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
                 .entrySet()
                 .stream()
-                .filter(occurence -> occurence.getValue() > 1)
+                .filter(occurrence -> occurrence.getValue() > 1)
                 .count();
     }
 
     //Vad hette den skådis som var med i flest filmer? Returnera en String
-    public int actorInMostMovies (List<Movie> list) {
+    public String actorInMostMovies (List<Movie> list) {
         return
-                (int) list
-                        .stream()
-                        .flatMap(m -> m.getCast()
-                        .stream())
-                        .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
-                        .entrySet()
-                        .stream()
-                        .max(m->m.getValue())
-                        .map(Movie::getTitle)
-                        .collect(Collectors.joining(", "));
-
-
+                 list
+                .stream()
+                .flatMap(m -> m.getCast()
+                .stream())
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparing(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .orElse("Error in database, no actor match found");
     }
 
+    //Hur många UNIKA språk har filmerna? Returnera ett tal.
+    public int uniqueLanguages (List<Movie> list) {
 
+        return list
+                .stream()
+                .map(m -> m.getLanguages())
+                .flatMap(List::stream)
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    public boolean dupes (List<Movie> list) {
+        return
+                 list
+                .stream()
+                .map(m -> m.getTitle()
+                .toLowerCase())
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .anyMatch(occurrence -> occurrence.getValue() > 1);
+
+    }
 
 }

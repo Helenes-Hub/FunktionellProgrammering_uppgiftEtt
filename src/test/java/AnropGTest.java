@@ -1,18 +1,15 @@
 import java.util.List;
 import static java.util.Arrays.asList;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnropGTest {
     //6 movies, one language dupe, one movie title dupe,
     AnropG anropTest=new AnropG();
-    List<Movie> testMovies = List.of(
+    final List<Movie> testMovies = List.of(
             new Movie("573a139af29313caabcf1aed", "Pastorali", 1975,
                     List.of("Drama"), "null",
-                    List.of("Nana Ioseliani", "Tamar Gabarashvili", "Mikhail Naneishvili", "Nukri Davitashvili"),
+                    List.of("Nana Ioseliani", "Tamar Gabarashvili", "Mikhail Naneishvili"),
                     7.3, List.of("English"), 95),
 
             new Movie("573a139bf29313caabcf25df", "Iracema - Uma Transa Amazènica", 1975,
@@ -22,7 +19,7 @@ public class AnropGTest {
 
             new Movie("573a139bf29313caabcf43e5", "Pastorali", 1975,
                     List.of("Drama"), "null",
-                    List.of("Nana Ioseliani", "Tamar Gabarashvili", "Mikhail Naneishvili", "Nukri Davitashvili"),
+                    List.of("Nana Ioseliani", "Tamar Gabarashvili", "Mikhail Naneishvili"),
                     7.3, List.of("Georgian"), 95),
 
             new Movie("573a139bf29313caabcf4631", "Kaseki", 1975,
@@ -40,6 +37,16 @@ public class AnropGTest {
                     List.of("Claudia Mori", "Charlotte Rampling", "Gino Santercole", "Adriano Celentano"),
                     6.2, List.of("Italian"), 120)
     );
+    final List<Movie> testMoviesNoDupe = List.of(
+            new Movie("573a139af29313caabcf1aed", "Pastorali", 1975,
+                    List.of("Drama"), "null",
+                    List.of("Nana Ioseliani", "Tamar Gabarashvili", "Mikhail Naneishvili"),
+                    7.3, List.of("English"), 95),
+
+            new Movie("573a139bf29313caabcf25df", "Iracema - Uma Transa Amazènica", 1975,
+                    List.of("Drama"), "null",
+                    List.of("Paulo Cèsar Perèio", "Edna de Cèssia", "Lècio Dos Santos", "Elma Martins"),
+                    7.0, List.of("Portuguese"), 90) );
     @Test
     public void countMoviesTest(){
         assertEquals(6, anropTest.countAll(testMovies));
@@ -48,38 +55,60 @@ public class AnropGTest {
     }
 
     @Test
-    void longestMovie() {
+    void longestMovieTest() {
+        assertEquals(200, anropTest.longestMovie(testMovies));
+        assertNotEquals(0, anropTest.longestMovie(testMovies));
+        assertNotEquals(201, anropTest.longestMovie(testMovies));
     }
 
     @Test
-    void uniqueGenre() {
+    void uniqueGenreTest() {
+        assertEquals(2, anropTest.uniqueGenre(testMovies));
+        assertNotEquals(0, anropTest.uniqueGenre(testMovies));
+        assertNotEquals(20, anropTest.uniqueGenre(testMovies));
     }
 
     @Test
-    void bestMovieForTestingPurposes() {
+    void bestRatedActorsTest() {
+        List <String> notBestRatedActors= asList("Shin Saburi", "Mayumi Ogawa", "Keiko Kishi", "Komaki Kurihara");
+        List <String> bestRatedActors =asList("Paul Copley", "Pamela Brighton", "Nikolas Simmonds", "Gary Roberts");
+        assertEquals(bestRatedActors, anropTest.bestRatedActors(testMovies));
+        assertNotEquals(0, anropTest.bestRatedActors(testMovies));
+        assertNotEquals(notBestRatedActors, anropTest.bestRatedActors(testMovies));
     }
 
     @Test
-    void bestRatedActors() {
+    void movieWithLeastActorsTest() {
+        assertEquals("Pastorali, Pastorali", anropTest.movieWithLeastActors(testMovies));
+        assertNotEquals("Pastorali", anropTest.movieWithLeastActors(testMovies));
+        assertNotEquals(0, anropTest.movieWithLeastActors(testMovies));
     }
 
     @Test
-    void movieWithLeastActors() {
-    }
-
-    @Test
-    void howManyActorsInMultipleMovies() {
+    void howManyActorsInMultipleMoviesTest() {
+        assertEquals(3, anropTest.howManyActorsInMultipleMovies(testMovies));
+        assertNotEquals(0, anropTest.howManyActorsInMultipleMovies(testMovies));
+        assertNotEquals(20, anropTest.howManyActorsInMultipleMovies(testMovies));
     }
 
     @Test
     void actorInMostMovies() {
+        assertEquals("Mikhail Naneishvili", anropTest.actorInMostMovies(testMovies));
+        assertNotEquals("Henry", anropTest.actorInMostMovies(testMovies));
+        assertNotEquals(0, anropTest.actorInMostMovies(testMovies));
     }
 
     @Test
     void uniqueLanguages() {
+        assertEquals(5, anropTest.uniqueLanguages(testMovies));
+        assertEquals(2, anropTest.uniqueLanguages(testMoviesNoDupe));
+        assertNotEquals(3, anropTest.uniqueLanguages(testMoviesNoDupe));
+        assertNotEquals(6, anropTest.uniqueLanguages(testMovies));
     }
 
     @Test
     void dupes() {
+        assertTrue(anropTest.dupes(testMovies));
+        assertFalse(anropTest.dupes(testMoviesNoDupe));
     }
 }

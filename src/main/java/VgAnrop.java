@@ -22,5 +22,17 @@ public class VgAnrop {
                 .max()
                 .orElse(0);
     }
+    public String bestRated (List<Movie> list, SearchForList sts, HighestNumberInterface hn) {
+        //HighestNumberInterface rating= m-> (m).getImdbRating();
+        Double bestRating=highestDigit(list, hn);
+
+        return list
+                .stream()
+                .filter(m -> m.getImdbRating() == bestRating)
+                .map(sts::searchList)
+                .flatMap(searchlist -> searchlist.stream())
+                .collect(Collectors.joining(", "));
+
+    }
 
 }

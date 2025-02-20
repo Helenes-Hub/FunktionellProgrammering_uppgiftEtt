@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 import static java.util.Arrays.asList;
 import org.junit.jupiter.api.Test;
@@ -136,6 +137,20 @@ public class AnropGTest {
         assertEquals(200, vgAnropTest.highestDigit(testMovies,longestRuntime));
         assertNotEquals(0, vgAnropTest.highestDigit(testMovies,longestRuntime));
         assertNotEquals(201, vgAnropTest.highestDigit(testMovies, longestRuntime));
+    }
+
+    @Test
+    void bestRated(){
+        SearchForList bestActor = (m) -> m.getCast();
+        SearchForList bestMovie = m -> Collections.singletonList(m.getTitle());
+        HighestNumberInterface rating= (m) -> m.getImdbRating();
+
+        String notBestRatedActors= "Shin Saburi, Mayumi Ogawa, Keiko Kishi, Komaki Kurihara";
+        String bestRatedActors ="Paul Copley, Pamela Brighton, Nikolas Simmonds, Gary Roberts";
+        assertEquals(bestRatedActors, vgAnropTest.bestRated(testMovies, bestActor, rating));
+        assertNotEquals(0, vgAnropTest.bestRated(testMovies, bestActor, rating));
+        assertNotEquals(notBestRatedActors, vgAnropTest.bestRated(testMovies, bestActor, rating));
+
     }
 
 }

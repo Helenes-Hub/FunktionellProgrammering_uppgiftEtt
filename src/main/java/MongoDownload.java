@@ -3,6 +3,7 @@ import com.mongodb.client.*;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -89,6 +90,9 @@ public class MongoDownload {
 
             HighestNumberInterface rating= (m) -> m.getImdbRating();
             HighestNumberInterface longestRuntime= m -> m.getRuntime();
+
+            SearchForList bestActor = (m) -> m.getCast();
+            SearchForList bestMovie = m -> Collections.singletonList(m.getTitle());
 
 
     } catch (Exception e) {

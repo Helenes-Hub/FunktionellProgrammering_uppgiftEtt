@@ -147,9 +147,13 @@ public class AnropGTest {
 
         String notBestRatedActors= "Shin Saburi, Mayumi Ogawa, Keiko Kishi, Komaki Kurihara";
         String bestRatedActors ="Paul Copley, Pamela Brighton, Nikolas Simmonds, Gary Roberts";
+
         assertEquals(bestRatedActors, vgAnropTest.bestRated(testMovies, bestActor, rating));
         assertNotEquals(0, vgAnropTest.bestRated(testMovies, bestActor, rating));
         assertNotEquals(notBestRatedActors, vgAnropTest.bestRated(testMovies, bestActor, rating));
+
+        assertEquals("Days of Hope", vgAnropTest.bestRated(testMovies, bestMovie, rating));
+        assertNotEquals("Days of Pope", vgAnropTest.bestRated(testMovies, bestMovie, rating));
 
     }
 

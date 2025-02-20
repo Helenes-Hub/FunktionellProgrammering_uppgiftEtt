@@ -6,6 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AnropGTest {
     //6 movies, one language dupe, one movie title dupe,
     AnropG anropTest=new AnropG();
+    VgAnrop vgAnropTest=new VgAnrop();
+    SearchInterface genres = (m) -> m.getGenres();
+    SearchInterface languages = (m) -> m.getLanguages();
+    HighestNumberInterface rating= (m) -> m.getImdbRating();
+    HighestNumberInterface longestRuntime= m -> m.getRuntime();
+
+
+
     final List<Movie> testMovies = List.of(
             new Movie("573a139af29313caabcf1aed", "Pastorali", 1975,
                     List.of("Drama"), "null",
@@ -111,4 +119,23 @@ public class AnropGTest {
         assertTrue(anropTest.dupes(testMovies));
         assertFalse(anropTest.dupes(testMoviesNoDupe));
     }
+
+    @Test
+    void unique() {
+        assertEquals(2, vgAnropTest.unique(testMovies, genres));
+        assertNotEquals(0, vgAnropTest.unique(testMovies, genres));
+        assertNotEquals(20, vgAnropTest.unique(testMovies, genres));
+
+        assertEquals(5, vgAnropTest.unique(testMovies,languages));
+        assertNotEquals(3, vgAnropTest.unique(testMovies,languages));
+        assertNotEquals(6, vgAnropTest.unique(testMovies,languages));
+    }
+
+    @Test
+    void highestDigit() {
+        assertEquals(200, vgAnropTest.highestDigit(testMovies,longestRuntime));
+        assertNotEquals(0, vgAnropTest.highestDigit(testMovies,longestRuntime));
+        assertNotEquals(201, vgAnropTest.highestDigit(testMovies, longestRuntime));
+    }
+
 }

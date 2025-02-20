@@ -9,6 +9,7 @@ import java.util.List;
 public class MongoDownload {
     public MongoDownload() {
         AnropG anrop=new AnropG();
+        VgAnrop vgAnrop=new VgAnrop();
         //Skriv in rätt url!
         String uri = "mongodb+srv://helenerydberg:sanna07@cluster0.n1n53.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -75,6 +76,20 @@ public class MongoDownload {
         //fråga9
         System.out.println("Question nine: \n");
         System.out.println("It is -"+anrop.dupes(movieList)+ "- that there are duplicate movies"+"\n");
+
+
+
+        //VG
+
+            SearchInterface genres = (m) -> m.getGenres();
+            SearchInterface languages = (m) -> m.getLanguages();
+
+            System.out.println("VG number of genres is: "+ vgAnrop.unique(movieList, genres));
+            System.out.println("VG number of languages is: "+ vgAnrop.unique(movieList, languages));
+
+            HighestNumberInterface rating= (m) -> m.getImdbRating();
+            HighestNumberInterface longestRuntime= m -> m.getRuntime();
+
 
     } catch (Exception e) {
         e.printStackTrace();

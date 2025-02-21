@@ -9,10 +9,10 @@ import java.util.List;
 
 public class MongoDownload {
     public MongoDownload() {
-        AnropG anrop=new AnropG();
-        VgAnrop vgAnrop=new VgAnrop();
+        final AnropG anrop=new AnropG();
+        final VgAnrop vgAnrop=new VgAnrop();
         //Skriv in rätt url!
-        String uri = "mongodb+srv://helenerydberg:sanna07@cluster0.n1n53.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        final String uri = "mongodb+srv://helenerydberg:sanna07@cluster0.n1n53.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("sample_mflix");
@@ -82,17 +82,22 @@ public class MongoDownload {
 
         //VG
 
-            SearchInterface genres = (m) -> m.getGenres();
-            SearchInterface languages = (m) -> m.getLanguages();
+            final SearchInterface genres = (m) -> m.getGenres();
+            final SearchInterface languages = (m) -> m.getLanguages();
 
             System.out.println("VG number of genres is: "+ vgAnrop.unique(movieList, genres));
             System.out.println("VG number of languages is: "+ vgAnrop.unique(movieList, languages));
 
-            HighestNumberInterface rating= (m) -> m.getImdbRating();
-            HighestNumberInterface longestRuntime= m -> m.getRuntime();
+            final HighestNumberInterface highestRating= (m) -> m.getImdbRating();
+            final HighestNumberInterface longestRuntime= (m) -> m.getRuntime();
 
-            SearchForList bestActor = (m) -> m.getCast();
-            SearchForList bestMovie = m -> Collections.singletonList(m.getTitle());
+
+            final SearchForList bestActor = (m) -> m.getCast();
+            final SearchForList bestMovie = (m) -> Collections.singletonList(m.getTitle());
+
+            System.out.println("VG Actors in top ranked movie: "+ vgAnrop.bestRated(movieList,bestActor, highestRating));
+            System.out.println("From the movie/s: "+ vgAnrop.bestRated(movieList,bestMovie, highestRating));
+            System.out.println("VG longest runtime is: "+ vgAnrop.highestDigit(movieList,longestRuntime));
 
 
     } catch (Exception e) {
